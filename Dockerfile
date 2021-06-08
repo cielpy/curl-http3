@@ -5,7 +5,7 @@ LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 WORKDIR /opt
 
 ARG CURL_VERSION=curl-7_76_1
-ARG QUICHE_VERSION=0.8.0
+ARG QUICHE_VERSION=0.9.0
 
 RUN apt-get update && \
     apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
@@ -31,7 +31,7 @@ RUN git clone https://github.com/curl/curl
 RUN cd curl && \
     git checkout $CURL_VERSION && \
     ./buildconf && \
-    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-ssl=/opt/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --enable-alt-svc && \
+    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-openssl=/opt/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --enable-alt-svc && \
     make && \
     make DESTDIR="/ubuntu/" install
 
